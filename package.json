@@ -1,11 +1,11 @@
 {
   "name": "abstract-element",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A base class for creating web components",
   "main": "dist/abstract-element.js",
   "scripts": {
     "build": "tsc",
-    "dev": "webpack-dev-server --config ./demo/webpack.config.js",
+    "dev": "concurrently --raw \"tsc -w\" \"webpack-dev-server --config ./demo/webpack.config.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +30,7 @@
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
+    "concurrently": "^3.5.1",
     "copy-webpack-plugin": "^4.5.1",
     "ts-loader": "^4.3.0",
     "typescript": "^2.8.3",
