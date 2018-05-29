@@ -1,6 +1,6 @@
 {
   "name": "abstract-element",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A base class for creating web components",
   "main": "dist/abstract-element.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sumbad/abstract-element.git"
+    "url": "git+https://github.com/inscriptum/abstract-element.git"
   },
   "keywords": [
     "abstract",
@@ -20,9 +20,9 @@
   "author": "Den Sumbaev @sumbad",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sumbad/abstract-element/issues"
+    "url": "https://github.com/inscriptum/abstract-element/issues"
   },
-  "homepage": "https://github.com/sumbad/abstract-element#readme",
+  "homepage": "https://github.com/inscriptum/abstract-element#readme",
   "dependencies": {
     "hyperhtml": "^2.10.1"
   },
