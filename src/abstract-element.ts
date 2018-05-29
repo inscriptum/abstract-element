@@ -3,9 +3,10 @@ import hyperHTML from 'hyperhtml/esm';
 
 
 /**
- * Abstract component
+ * Abstract element to create web component with hyperHTML render function
  */
-export abstract class AbstractWebComponent extends HTMLElement {
+export abstract class AbstractElement extends HTMLElement {
+  static attrNames: { [x: string]: string } = {};
   private connected: boolean = false;
   private bind: any;
   protected html = hyperHTML.wire(this);
@@ -14,14 +15,19 @@ export abstract class AbstractWebComponent extends HTMLElement {
   protected _style: string;
 
   private _scope: any;
-  protected set scope(states: any) {
-    this._scope = states || this.scope;
+  protected set state(newState: any) {
+    this._scope = newState || this.state;
     this.realRender();
   }
-  protected get scope(){
+  protected get state() {
     return this._scope;
   }
 
+  static get observedAttributes() {
+    console.log(this.attrNames);
+    
+    return Object.keys(this.attrNames).map(key => this.attrNames[key]);
+  }
 
 
   constructor(
@@ -75,7 +81,7 @@ export abstract class AbstractWebComponent extends HTMLElement {
    * Render function
    */
   realRender(): void {
-    if(this.connected){
+    if (this.connected) {
       this.bind`${this._style}${this.render()}`;
     }
   }
@@ -96,6 +102,5 @@ export function Define(nameTag: string) {
     } catch (error) {
       console.warn(error)
     }
-
   };
 }

@@ -1,5 +1,5 @@
 import hyperHTML from 'hyperhtml/esm';
-export class AbstractWebComponent extends HTMLElement {
+export class AbstractElement extends HTMLElement {
     constructor(staticStyle = '', shadow = false, mode = 'open') {
         super();
         this.connected = false;
@@ -22,12 +22,16 @@ export class AbstractWebComponent extends HTMLElement {
             this._style = hyperHTML.wire() `<style>${this._style}</style>`;
         }
     }
-    set scope(states) {
-        this._scope = states || this.scope;
+    set state(newState) {
+        this._scope = newState || this.state;
         this.realRender();
     }
-    get scope() {
+    get state() {
         return this._scope;
+    }
+    static get observedAttributes() {
+        console.log(this.attrNames);
+        return Object.keys(this.attrNames).map(key => this.attrNames[key]);
     }
     connectedCallback(initialPropsList = []) {
         this.connected = true;
@@ -45,6 +49,7 @@ export class AbstractWebComponent extends HTMLElement {
         }
     }
 }
+AbstractElement.attrNames = {};
 export function Define(nameTag) {
     return (originalConstructor) => {
         try {

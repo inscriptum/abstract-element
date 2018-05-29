@@ -1,4 +1,7 @@
-export declare abstract class AbstractWebComponent extends HTMLElement {
+export declare abstract class AbstractElement extends HTMLElement {
+    static attrNames: {
+        [x: string]: string;
+    };
     private connected;
     private bind;
     protected html: (template: TemplateStringsArray, ...values: any[]) => any;
@@ -11,7 +14,8 @@ export declare abstract class AbstractWebComponent extends HTMLElement {
     };
     protected _style: string;
     private _scope;
-    protected scope: any;
+    protected state: any;
+    static readonly observedAttributes: string[];
     constructor(staticStyle?: string, shadow?: boolean, mode?: 'open' | 'closed');
     connectedCallback(initialPropsList?: string[]): void;
     attributeChangedCallback(name: any, oldValue: any, newValue: any): void;

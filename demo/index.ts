@@ -1,13 +1,11 @@
-import { AbstractWebComponent, Define } from '../dist/abstract-element';
+import { AbstractElement, Define } from '../dist/abstract-element';
 
 
 
 @Define('demo-component')
-export class DemoComponent extends AbstractWebComponent {
-  static attrNames = ['data-demo'];
-  static get observedAttributes() { return this.attrNames; }
-
-  scope = {
+export class DemoComponent extends AbstractElement {
+  static attrNames = { dataDemo: 'data-demo' };
+  state = {
     time: new Date().toLocaleTimeString()
   };
 
@@ -17,7 +15,7 @@ export class DemoComponent extends AbstractWebComponent {
 
     // update the time each second
     setInterval(() => {
-      this.scope = {
+      this.state = {
         time: new Date().toLocaleTimeString()
       };
     }, 1000);
@@ -27,8 +25,8 @@ export class DemoComponent extends AbstractWebComponent {
   render() {
     return this.html`
     <section>
-      <p>${this.attr['data-demo']}</p>
-      <div>${this.scope.time}</div>
+      <p>${this.attr[DemoComponent.attrNames.dataDemo]}</p>
+      <div>${this.state.time}</div>
     </section>
     `;
   }
