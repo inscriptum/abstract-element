@@ -6,32 +6,40 @@ import hyperHTML from 'hyperhtml/esm';
  * Abstract component
  */
 export abstract class AbstractWebComponent extends HTMLElement {
-  private html: any;
+  private connected: boolean = false;
+  private bind: any;
+  protected html = hyperHTML.wire(this);
   protected wire = hyperHTML.wire;
-  protected props: { [x: string]: string } = {};
-
-  protected _template: (html, scope) => any;
+  protected attr: { [x: string]: string } = {};
   protected _style: string;
+
+  private _scope: any;
+  protected set scope(states: any) {
+    this._scope = states || this.scope;
+    this.realRender();
+  }
+  protected get scope(){
+    return this._scope;
+  }
+
 
 
   constructor(
-    templateFunction: (html, scope) => any,
     staticStyle: string = '',
     shadow = false,
     mode: 'open' | 'closed' = 'open'
   ) {
     super();
     try {
-      this._template = templateFunction;
       this._style = staticStyle;
     } catch (error) {
-      console.warn('Can not find a template!');
+      console.warn('Can not find a static style!');
     }
 
     if (shadow) {
-      this.html = hyperHTML.bind(this.attachShadow({ mode }));
+      this.bind = hyperHTML.bind(this.attachShadow({ mode }));
     } else {
-      this.html = hyperHTML.bind(this);
+      this.bind = hyperHTML.bind(this);
     }
 
     if (this._style && this._style !== '') {
@@ -40,13 +48,14 @@ export abstract class AbstractWebComponent extends HTMLElement {
   }
 
 
+
   /**
    * LIFECYCLE
    * Invoked when the custom element is first connected to the document's DOM.
    */
   connectedCallback(initialPropsList: string[] = []): void {
-    this._initialProps(initialPropsList);
-    this.render();
+    this.connected = true;
+    this.realRender();
   }
 
 
@@ -55,36 +64,24 @@ export abstract class AbstractWebComponent extends HTMLElement {
    * Invoked when one of the custom element's attributes is added, removed, or changed.
    */
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue && this.props[name] !== newValue) {
-      this.props[name] = newValue;
-      this.render();
+    if (oldValue !== newValue && this.attr[name] !== newValue) {
+      this.attr[name] = newValue;
+      this.realRender();
     }
   }
 
 
   /**
-   * Initialization
-   * @param props - attribute for initialization
-   */
-  _initialProps(props: string[]): void {
-    if (typeof props !== 'undefined')
-      props.forEach(prop => {
-        const propAttr = this.getAttribute(prop);
-        if (typeof propAttr !== 'undefined' && propAttr !== null) {
-          this.props[prop] = propAttr;
-        }
-      });
-  }
-
-
-  /**
    * Render function
-   * 
-   * @param scope - scope in the template ('this' by default)
    */
-  render(scope: any = this): void {
-    this.html`${this._style}${this._template(hyperHTML.wire(this), scope)}`;
+  realRender(): void {
+    if(this.connected){
+      this.bind`${this._style}${this.render()}`;
+    }
   }
+
+
+  abstract render(): () => void;
 
 }
 
