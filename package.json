@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/inscriptum/abstract-element#readme",
   "dependencies": {
-    "hyperhtml": "^2.10.1"
+    "hyperhtml": "^2.10.1",
+    "lit-html": "^0.10.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
