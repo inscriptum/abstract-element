@@ -1,6 +1,6 @@
 {
   "name": "abstract-element",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A base class for creating web components",
   "main": "dist/abstract-element.js",
   "scripts": {
