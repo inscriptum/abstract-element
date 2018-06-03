@@ -17,7 +17,7 @@ export declare abstract class AbstractElement extends HTMLElement {
     protected state: any;
     static readonly observedAttributes: string[];
     constructor(staticStyle?: string, shadow?: boolean, mode?: 'open' | 'closed');
-    connectedCallback(initialPropsList?: string[]): void;
+    connectedCallback(): void;
     attributeChangedCallback(name: any, oldValue: any, newValue: any): void;
     realRender(): void;
     abstract render(): () => void;

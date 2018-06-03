@@ -24,8 +24,6 @@ export abstract class AbstractElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    console.log(this.attrNames);
-    
     return Object.keys(this.attrNames).map(key => this.attrNames[key]);
   }
 
@@ -59,7 +57,7 @@ export abstract class AbstractElement extends HTMLElement {
    * LIFECYCLE
    * Invoked when the custom element is first connected to the document's DOM.
    */
-  connectedCallback(initialPropsList: string[] = []): void {
+  connectedCallback(): void {
     this.connected = true;
     this.realRender();
   }

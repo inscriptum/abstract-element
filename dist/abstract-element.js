@@ -30,10 +30,9 @@ export class AbstractElement extends HTMLElement {
         return this._scope;
     }
     static get observedAttributes() {
-        console.log(this.attrNames);
         return Object.keys(this.attrNames).map(key => this.attrNames[key]);
     }
-    connectedCallback(initialPropsList = []) {
+    connectedCallback() {
         this.connected = true;
         this.realRender();
     }
