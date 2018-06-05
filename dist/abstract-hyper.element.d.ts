@@ -5,10 +5,7 @@ export declare abstract class AbstractHyperElement extends HTMLElement {
     private connected;
     private attach;
     protected html: (template: TemplateStringsArray, ...values: any[]) => any;
-    protected wire: {
-        (identity?: object | null | undefined, type?: "html" | "svg" | undefined): (template: TemplateStringsArray, ...values: any[]) => any;
-        (identity?: object | null | undefined, type_id?: string | undefined): (template: TemplateStringsArray, ...values: any[]) => any;
-    };
+    protected wire: typeof import("../node_modules/hyperhtml/index").wire;
     protected attr: {
         [x: string]: string;
     };

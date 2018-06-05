@@ -1,6 +1,6 @@
 {
   "name": "abstract-element",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "A base class for creating web components",
   "main": "dist/abstract-element.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/inscriptum/abstract-element#readme",
   "dependencies": {
-    "hyperhtml": "^2.10.1",
+    "hyperhtml": "^2.10.5",
     "lit-html": "^0.10.0"
   },
   "devDependencies": {
@@ -33,10 +33,10 @@
     "babel-preset-env": "^1.7.0",
     "concurrently": "^3.5.1",
     "copy-webpack-plugin": "^4.5.1",
-    "ts-loader": "^4.3.0",
-    "typescript": "^2.8.3",
-    "webpack": "^4.9.1",
-    "webpack-cli": "^2.1.4",
+    "ts-loader": "^4.3.1",
+    "typescript": "^2.9.1",
+    "webpack": "^4.10.2",
+    "webpack-cli": "^2.1.5",
     "webpack-dev-server": "^3.1.4"
   }
 }
