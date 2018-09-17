@@ -7,3 +7,4 @@ node_modules/
 postcss.config.js
 tsconfig.json
 .babelrc
+babel.config.js
