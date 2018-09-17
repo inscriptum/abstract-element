@@ -1,4 +1,4 @@
-import { Define, AbstractLitElement, AbstractHyperElement } from '../dist/abstract-element';
+import { Define, AbstractLitElement, AbstractHyperElement } from '../dist';
 import { TemplateResult } from 'lit-html';
 
 
@@ -10,7 +10,7 @@ export class DemoHyperComponent extends AbstractHyperElement {
     time: new Date().toLocaleTimeString()
   };
 
-
+  
   constructor() {
     super('', true);
 

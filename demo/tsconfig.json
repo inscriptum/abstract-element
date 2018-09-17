@@ -19,7 +19,6 @@
     "allowSyntheticDefaultImports": true,
     "rootDir": "./",
     "baseUrl": "./",
-    "declaration": true,
     "inlineSources": true
   },
   "compileOnSave": false
