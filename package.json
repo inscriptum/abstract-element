@@ -1,6 +1,6 @@
 {
   "name": "abstract-element",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "A base class for creating web components",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
