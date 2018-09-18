@@ -3,6 +3,7 @@ src/
 webpack/
 node_modules/
 .vscode/
+tsconfig/
 
 postcss.config.js
 tsconfig.json
