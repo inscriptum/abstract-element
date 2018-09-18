@@ -17,17 +17,17 @@
     "removeComments": true,
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
-    "rootDir": "./src",
-    "baseUrl": "./src",
-    "outDir": "./dist",
+    "rootDir": "../src",
+    "baseUrl": "../src",
+    "outDir": "../lib",
     "declaration": true,
     "inlineSources": true,
   },
   "include": [
-    "src/**/*.ts"
+    "../src/**/*.ts"
   ],
   "exclude": [
-    "demo/**/*.ts"
+    "../demo/**/*.ts"
   ],
   "compileOnSave": false
 }

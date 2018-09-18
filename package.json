@@ -2,12 +2,13 @@
   "name": "abstract-element",
   "version": "3.1.0",
   "description": "A base class for creating web components",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "module": "./lib/esm5/index.js",
   "scripts": {
-    "build": "rimraf ./dist && tsc && npm run build-es5",
-    "build-es5": "npx babel dist --out-dir dist/es5",
-    "dev": "concurrently --raw \"tsc -w\" \"webpack-dev-server --config ./demo/webpack.config.js\"",
+    "build": "rimraf ./lib && tsc -p ./tsconfig/tsconfig.esm.json && tsc -p ./tsconfig/tsconfig.cjs.json",
+    "build-es5": "npx babel lib --out-dir lib/es5",
+    "dev": "rimraf ./lib && concurrently --raw \"tsc -w -p ./tsconfig/tsconfig.esm.json\" \"webpack-dev-server --config ./demo/webpack.config.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build"
   },
