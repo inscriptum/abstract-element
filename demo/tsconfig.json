@@ -9,6 +9,12 @@
       "dom.iterable",
       "es2015"
     ],
+    "paths": {
+      "abstract-element": ["../lib/esm5"]
+    },
+    "types": [
+      "../lib/esm5"
+    ],
     "isolatedModules": false,
     "experimentalDecorators": true,
     "noImplicitAny": false,

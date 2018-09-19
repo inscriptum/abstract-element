@@ -1,5 +1,5 @@
-import { Define, AbstractLitElement, AbstractHyperElement } from '../lib/esm5';
 import { TemplateResult } from 'lit-html';
+import { AbstractHyperElement, Define, AbstractLitElement } from 'abstract-element';
 
 
 

@@ -7,7 +7,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   resolve: {
     modules: ['dist', 'node_modules'],
-    extensions: ['.ts', '.js', '.json']
+    extensions: ['.ts', '.js', '.json'],
+    alias: {
+      'abstract-element': path.resolve(__dirname, '../lib/esm5')
+    }
   },
   mode: 'development',
   devServer: {
