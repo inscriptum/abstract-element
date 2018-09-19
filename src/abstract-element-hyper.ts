@@ -8,7 +8,7 @@ import { AbstractElement } from './abstract-element';
  */
 export abstract class AbstractHyperElement extends AbstractElement {
   protected html = hyperHTML.wire(this);
-  protected wire = hyperHTML.wire;
+  protected wire: typeof hyperHTML.wire = hyperHTML.wire;
 
 
   constructor(
