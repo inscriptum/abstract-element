@@ -1,18 +1,32 @@
 import { TemplateResult } from 'lit-html';
-import { AbstractHyperElement, Define, AbstractLitElement } from 'abstract-element';
+import { Define, AbstractElement } from 'abstract-element';
+import hyperRender from 'abstract-element/render-hyper';
+import litRender from 'abstract-element/render-lit';
+
+import * as litHtml from 'lit-html';
+import hyperHTML from 'hyperhtml/esm';
 
 
 
+/**
+ * The demo web component with hyperHTML render engine
+ */
 @Define('demo-hyper-component')
-export class DemoHyperComponent extends AbstractHyperElement {
-  static attrNames = { dataDemo: 'data-demo' };
+export class DemoHyperComponent extends AbstractElement {
+  static attributes = { dataDemo: 'data-demo' };
+  
   state = {
     time: new Date().toLocaleTimeString()
   };
 
+  html = hyperHTML.wire();
+
   
   constructor() {
-    super('', true);
+    super(hyperRender, true);
+
+    console.log(hyperRender);
+    
 
     // update the time each second
     setInterval(() => {
@@ -26,7 +40,7 @@ export class DemoHyperComponent extends AbstractHyperElement {
   render() {
     return this.html`
     <section>
-      <p>${this.attr[DemoComponent.attrNames.dataDemo]}</p>
+      <p>${this.attr[DemoHyperComponent.attributes.dataDemo]}</p>
       <div>${this.state.time}</div>
     </section>
     `;
@@ -35,16 +49,22 @@ export class DemoHyperComponent extends AbstractHyperElement {
 
 
 
+/**
+ * The demo web component with lit-html render engine
+ */
 @Define('demo-lit-component')
-export class DemoComponent extends AbstractLitElement {
-  static attrNames = { dataDemo: 'data-demo' };
+export class DemoLitComponent extends AbstractElement {
+  html = litHtml.html;
+
+  static attributes = { dataDemo: 'data-demo' };
+  
   state = {
     time: new Date().toLocaleTimeString()
   };
 
 
   constructor() {
-    super('', true);
+    super(litRender, true);
 
     // update the time each second
     setInterval(() => {
@@ -58,7 +78,7 @@ export class DemoComponent extends AbstractLitElement {
   render(): TemplateResult {
     return this.html`
     <section>
-      <p>${this.attr[DemoComponent.attrNames.dataDemo]}</p>
+      <p>${this.attr[DemoLitComponent.attributes.dataDemo]}</p>
       <div>${this.state.time}</div>
     </section>
     `;
