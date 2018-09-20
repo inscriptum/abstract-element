@@ -1,5 +1,4 @@
-export { AbstractHyperElement } from './abstract-element-hyper';
-export { AbstractLitElement} from './abstract-element-lit';
+export { AbstractElement } from './abstract-element';
 
 
 

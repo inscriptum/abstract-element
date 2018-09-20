@@ -1,27 +1,57 @@
 /**
+ * The template object interface for a render engine
+ */
+interface TemplateResult {
+  strings: TemplateStringsArray;
+  values: any[];
+}
+
+
+
+/**
  * Abstract render to create web component
  */
 export abstract class AbstractElement extends HTMLElement {
-  static attrNames: { [x: string]: string } = {};
-  protected connected: boolean = false;
-  protected attach: any;
-  protected html: any;
+  static attributes: { [x: string]: string } = {};
+  private connected: boolean = false;
+  private attach: any;
   protected attr: { [x: string]: string } = {};
-  protected _style: any;
 
-  protected _scope: any;
+  private _scope: any;
+  
   protected set state(newState: any) {
     this._scope = newState || this.state;
-    this.renderElement();
+    this.attach();
   }
+
   protected get state() {
     return this._scope;
   }
 
   static get observedAttributes() {
-    return Object.keys(this.attrNames).map(key => this.attrNames[key]);
+    return Object.keys(this.attributes).map(key => this.attributes[key]);
   }
 
+
+  constructor(
+    renderFunc: (content: Element, template: TemplateResult) => any,
+    shadow = false,
+    mode: 'open' | 'closed' = 'open'
+  ) {
+    super();
+
+    this.attach = (container) => {
+      if (this.connected) {
+        renderFunc(container, this.render())
+      }
+    };
+
+    if (shadow) {
+      this.attach = this.attach.bind(null, this.attachShadow({ mode }));
+    } else {
+      this.attach = this.attach.bind(null, this);
+    }
+  }
 
 
   /**
@@ -30,7 +60,7 @@ export abstract class AbstractElement extends HTMLElement {
    */
   connectedCallback(): void {
     this.connected = true;
-    this.renderElement();
+    this.attach();
   }
 
 
@@ -41,7 +71,7 @@ export abstract class AbstractElement extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue && this.attr[name] !== newValue) {
       this.attr[name] = newValue;
-      this.renderElement();
+      this.attach();
     }
   }
 
@@ -49,9 +79,5 @@ export abstract class AbstractElement extends HTMLElement {
   /**
    * Render function
    */
-  abstract renderElement()
-
-
-  abstract render()
-
+  abstract render(): TemplateResult;
 }
