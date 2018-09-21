@@ -1,14 +1,15 @@
 {
   "name": "abstract-element",
-  "description": "A base class for creating web components",
+  "version": "4.0.1",
+  "description": "The abstract class for creating web components",
   "main": "./es5/index.js",
-  "module": "./index.js",
-  "typings": "./index.d.ts",
+  "module": "./esm2015/index.js",
+  "typings": "./esm2015/index.d.ts",
   "private": true,
   "scripts": {
-    "build": "rimraf ./lib/esm2015 && rimraf ./lib/es5 && tsc -p ./tsconfig/tsconfig.esm.json && tsc -p ./tsconfig/tsconfig.cjs.json",
+    "build": "rimraf ./lib && tsc -p ./tsconfig/tsconfig.esm.json && tsc -p ./tsconfig/tsconfig.cjs.json && node ./scripts/.make-lib",
     "build-es5": "npx babel lib --out-dir lib/es5",
-    "dev": "rimraf ./lib/esm2015 && rimraf ./lib/es5 && concurrently --raw \"tsc -w -p ./tsconfig/tsconfig.esm.json\" \"webpack-dev-server --config ./demo/webpack.config.js\"",
+    "dev": "rimraf ./lib && concurrently --raw \"tsc -w -p ./tsconfig/tsconfig.esm.json\" \"webpack-dev-server --config ./demo/webpack.config.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pub": "npm publish ./lib",
     "pub:beta": "npm publish ./lib --tag beta"
@@ -23,11 +24,23 @@
     "component"
   ],
   "author": "Den Sumbaev @sumbad",
+  "contributors": [
+    {
+      "name": "Den Sumbaev @sumbad"
+    },
+    {
+      "name": "Aleksey Zikrackiy @mralexrabota"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/inscriptum/abstract-element/issues"
   },
   "homepage": "https://github.com/inscriptum/abstract-element#readme",
+  "peerDependencies": {
+    "hyperhtml": "^2.14.0",
+    "lit-html": "^0.11.3"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.1",
@@ -37,6 +50,7 @@
     "babel-preset-env": "^1.7.0",
     "concurrently": "^3.6.1",
     "copy-webpack-plugin": "^4.5.2",
+    "fs-extra": "^7.0.0",
     "hyperhtml": "^2.14.0",
     "lit-html": "^0.11.4",
     "rimraf": "^2.6.2",

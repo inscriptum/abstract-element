@@ -61,5 +61,4 @@ typings/
 .next
 
 dist
-lib/esm2015
-lib/es5
+lib
