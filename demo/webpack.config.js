@@ -7,7 +7,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   resolve: {
     modules: ['dist', 'node_modules'],
-    extensions: ['.ts', '.js', '.json']
+    extensions: ['.ts', '.js', '.json'],
+    alias: {
+      'abstract-element': path.resolve(__dirname, '../lib/esm2015'),
+      "abstract-element/render-hyper": path.resolve(__dirname, '../lib/esm2015/render-hyper'),
+      "abstract-element/render-lit": path.resolve(__dirname, '../lib/esm2015/render-lit')
+    }
   },
   mode: 'development',
   devServer: {
