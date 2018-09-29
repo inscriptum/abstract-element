@@ -14,9 +14,6 @@
       "abstract-element/render-hyper": ["../lib/esm2015/render-hyper"],
       "abstract-element/render-lit": ["../lib/esm2015/render-lit"]
     },
-    "types": [
-      "../lib"
-    ],
     "isolatedModules": false,
     "experimentalDecorators": true,
     "noImplicitAny": false,

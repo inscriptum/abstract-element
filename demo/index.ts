@@ -25,9 +25,6 @@ export class DemoHyperComponent extends AbstractElement {
   constructor() {
     super(hyperRender, true);
 
-    console.log(hyperRender);
-    
-
     // update the time each second
     setInterval(() => {
       this.state = {
