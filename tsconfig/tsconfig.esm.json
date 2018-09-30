@@ -4,6 +4,6 @@
     "target": "es2015",
     "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "../lib/esm2015",
+    "outDir": "../lib",
   }
 }
