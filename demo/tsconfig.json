@@ -10,13 +10,10 @@
       "es2015"
     ],
     "paths": {
-      "abstract-element": ["../lib/esm2015"],
-      "abstract-element/render-hyper": ["../lib/esm2015/render-hyper"],
-      "abstract-element/render-lit": ["../lib/esm2015/render-lit"]
+      "abstract-element": ["../lib"],
+      "abstract-element/render/hyper": ["../lib/render/hyper"],
+      "abstract-element/render/lit": ["../lib/render/lit"]
     },
-    "types": [
-      "../lib"
-    ],
     "isolatedModules": false,
     "experimentalDecorators": true,
     "noImplicitAny": false,

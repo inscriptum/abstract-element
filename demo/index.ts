@@ -1,7 +1,7 @@
 import { TemplateResult } from 'lit-html';
 import { Define, AbstractElement } from 'abstract-element';
-import hyperRender from 'abstract-element/render-hyper';
-import litRender from 'abstract-element/render-lit';
+import hyperRender from 'abstract-element/render/hyper'
+import litRender from 'abstract-element/render/lit';
 
 import * as litHtml from 'lit-html';
 import hyperHTML from 'hyperhtml/esm';
@@ -24,9 +24,6 @@ export class DemoHyperComponent extends AbstractElement {
   
   constructor() {
     super(hyperRender, true);
-
-    console.log(hyperRender);
-    
 
     // update the time each second
     setInterval(() => {

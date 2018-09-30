@@ -9,9 +9,9 @@ module.exports = {
     modules: ['dist', 'node_modules'],
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      'abstract-element': path.resolve(__dirname, '../lib/esm2015'),
-      "abstract-element/render-hyper": path.resolve(__dirname, '../lib/esm2015/render-hyper'),
-      "abstract-element/render-lit": path.resolve(__dirname, '../lib/esm2015/render-lit')
+      'abstract-element': path.resolve(__dirname, '../lib'),
+      "abstract-element/render-hyper": path.resolve(__dirname, '../lib/render/hyper'),
+      "abstract-element/render-lit": path.resolve(__dirname, '../lib/render/lit')
     }
   },
   mode: 'development',
