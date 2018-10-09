@@ -47,7 +47,7 @@ function makePropertyMapper<T>(
   descriptor?: PropertyDescriptor
 ) {
   if (descriptor) {
-    const setter = descriptor.set;
+    const setter = descriptor.set || function () { };
     descriptor.set = function (val) {
       setter.apply(this, [val]);
       this.forceUpdate();
