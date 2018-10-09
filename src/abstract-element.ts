@@ -14,19 +14,15 @@ interface TemplateResult {
 export abstract class AbstractElement extends HTMLElement {
   static attributes: { [x: string]: string } = {};
   private connected: boolean = false;
-  private attach: any;
   protected attr: { [x: string]: string } = {};
 
-  private _scope: any;
-  
+  private _state: any;
   protected set state(newState: any) {
-    this._scope = newState || this.state;
-    this.attach();
+    this._state = newState || this.state;
+    this._attach();
   }
+  protected get state() { return this._state; }
 
-  protected get state() {
-    return this._scope;
-  }
 
   static get observedAttributes() {
     return Object.keys(this.attributes).map(key => this.attributes[key]);
@@ -40,16 +36,16 @@ export abstract class AbstractElement extends HTMLElement {
   ) {
     super();
 
-    this.attach = (container) => {
+    const attach = (container) => {
       if (this.connected) {
         renderFunc(container, this.render())
       }
     };
 
     if (shadow) {
-      this.attach = this.attach.bind(null, this.attachShadow({ mode }));
+      this._attach = attach.bind(null, this.attachShadow({ mode }));
     } else {
-      this.attach = this.attach.bind(null, this);
+      this._attach = attach.bind(null, this);
     }
   }
 
@@ -60,7 +56,7 @@ export abstract class AbstractElement extends HTMLElement {
    */
   connectedCallback(): void {
     this.connected = true;
-    this.attach();
+    this._attach();
   }
 
 
@@ -71,9 +67,23 @@ export abstract class AbstractElement extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue && this.attr[name] !== newValue) {
       this.attr[name] = newValue;
-      this.attach();
+      this._attach();
     }
   }
+
+
+  /**
+   * Force update current view
+   */
+  forceUpdate() {
+    this._attach();
+  }
+
+
+  /**
+   * Attach the current template to DOM
+   */
+  private _attach() { }
 
 
   /**
