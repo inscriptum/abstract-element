@@ -1,3 +1,5 @@
+import './waiter';
+
 import { TemplateResult } from 'lit-html';
 import { Define, AbstractElement } from 'abstract-element';
 import hyperRender from 'abstract-element/render/hyper'
@@ -14,14 +16,13 @@ import hyperHTML from 'hyperhtml/esm';
 @Define('demo-hyper-component')
 export class DemoHyperComponent extends AbstractElement {
   static attributes = { dataDemo: 'data-demo' };
+  html = hyperHTML.wire();
   
   state = {
     time: new Date().toLocaleTimeString()
   };
 
-  html = hyperHTML.wire();
 
-  
   constructor() {
     super(hyperRender, true);
 
@@ -51,10 +52,9 @@ export class DemoHyperComponent extends AbstractElement {
  */
 @Define('demo-lit-component')
 export class DemoLitComponent extends AbstractElement {
+  static attributes = { dataDemo: 'data-demo' };
   html = litHtml.html;
 
-  static attributes = { dataDemo: 'data-demo' };
-  
   state = {
     time: new Date().toLocaleTimeString()
   };
