@@ -34,6 +34,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
+              presets: ['@babel/preset-env'],
               babelrc: false
             }
           },
@@ -49,6 +50,10 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          babelrc: false
+        },
         exclude: [/node_modules/]
       }
     ]

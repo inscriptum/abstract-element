@@ -34,6 +34,26 @@ export function state() {
 
 
 /**
+ * Decorator for attribute properties inside AbstractElement
+ */
+export function attr(name) {
+  return function (target: any, key: string, descriptor?: PropertyDescriptor) {
+    const attributes = Reflect.get(target.constructor, 'attributes');
+
+    Reflect.defineProperty(target.constructor, 'attributes', {
+      value: { 
+        ...attributes,
+        [key]: name 
+      },
+      enumerable: true,
+      writable: true
+    });
+  };
+}
+
+
+
+/**
  * Mapper function for @state decoraror
  * 
  * @param prototype - a web component class prototype

@@ -1,4 +1,5 @@
 import './waiter';
+import './attributer/attributer';
 
 import { TemplateResult } from 'lit-html';
 import { Define, AbstractElement } from 'abstract-element';

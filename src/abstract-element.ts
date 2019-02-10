@@ -65,8 +65,18 @@ export abstract class AbstractElement extends HTMLElement {
    * Invoked when one of the custom element's attributes is added, removed, or changed.
    */
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue && this.attr[name] !== newValue) {
-      this.attr[name] = newValue;
+    if (oldValue !== newValue) {
+      if(this.attr[name] !== newValue) {
+        this.attr[name] = newValue;
+      }
+
+      for (const [attrProp, attrKey] of Object.entries(this.constructor['attributes'])) {
+        if(attrKey === name && this[attrProp] !== newValue) {
+          this[attrProp] = newValue;
+          break;
+        }
+      }
+
       this._attach();
     }
   }

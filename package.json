@@ -36,24 +36,24 @@
   },
   "homepage": "https://github.com/inscriptum/abstract-element#readme",
   "peerDependencies": {
-    "hyperhtml": "^2.14.0",
-    "lit-html": "^0.11.3"
+    "hyperhtml": "2.x",
+    "lit-html": "1.x"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.1",
-    "@babel/preset-env": "^7.0.0",
-    "babel-loader": "^7.1.5",
-    "concurrently": "^3.6.1",
-    "copy-webpack-plugin": "^4.5.2",
-    "fs-extra": "^7.0.0",
-    "hyperhtml": "^2.14.0",
-    "lit-html": "^0.11.4",
-    "rimraf": "^2.6.2",
-    "ts-loader": "^4.5.0",
-    "typescript": "^3.0.3",
-    "webpack": "^4.19.0",
-    "webpack-cli": "^2.1.5",
-    "webpack-dev-server": "^3.1.8"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
+    "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^4.6.0",
+    "fs-extra": "^7.0.1",
+    "hyperhtml": "^2.25.4",
+    "lit-html": "^1.0.0",
+    "rimraf": "^2.6.3",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
   }
 }
