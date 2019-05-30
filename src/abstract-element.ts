@@ -1,17 +1,14 @@
 /**
- * The template object interface for a render engine
+ * The render function interface for a render engine
  */
-interface TemplateResult {
-  strings: TemplateStringsArray;
-  values: any[];
+export interface IRenderFunction<T = any> {
+  (container: Element | DocumentFragment | ShadowRoot, template: T): any;
 }
-
-
 
 /**
  * Abstract render to create web component
  */
-export abstract class AbstractElement extends HTMLElement {
+export abstract class AbstractElement<T = any> extends HTMLElement {
   static attributes: { [x: string]: string } = {};
   private connected: boolean = false;
   protected attr: { [x: string]: string } = {};
@@ -21,16 +18,17 @@ export abstract class AbstractElement extends HTMLElement {
     this._state = newState || this.state;
     this._attach();
   }
-  protected get state() { return this._state; }
-
+  protected get state() {
+    return this._state;
+  }
 
   static get observedAttributes() {
     return Object.keys(this.attributes).map(key => this.attributes[key]);
   }
 
-
+  // prettier-ignore
   constructor(
-    renderFunc: (content: Element, template: TemplateResult) => any,
+    renderFunc: IRenderFunction<T>,
     shadow = false,
     mode: 'open' | 'closed' = 'open'
   ) {
@@ -49,7 +47,6 @@ export abstract class AbstractElement extends HTMLElement {
     }
   }
 
-
   /**
    * LIFECYCLE
    * Invoked when the custom element is first connected to the document's DOM.
@@ -59,19 +56,18 @@ export abstract class AbstractElement extends HTMLElement {
     this._attach();
   }
 
-
   /**
    * LIFECYCLE
    * Invoked when one of the custom element's attributes is added, removed, or changed.
    */
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue) {
-      if(this.attr[name] !== newValue) {
+      if (this.attr[name] !== newValue) {
         this.attr[name] = newValue;
       }
 
       for (const [attrProp, attrKey] of Object.entries(this.constructor['attributes'])) {
-        if(attrKey === name && this[attrProp] !== newValue) {
+        if (attrKey === name && this[attrProp] !== newValue) {
           this[attrProp] = newValue;
           break;
         }
@@ -81,7 +77,6 @@ export abstract class AbstractElement extends HTMLElement {
     }
   }
 
-
   /**
    * Force update current view
    */
@@ -89,15 +84,13 @@ export abstract class AbstractElement extends HTMLElement {
     this._attach();
   }
 
-
   /**
    * Attach the current template to DOM
    */
-  private _attach() { }
-
+  private _attach() {}
 
   /**
    * Render function
    */
-  abstract render(): TemplateResult;
+  abstract render(): T;
 }
