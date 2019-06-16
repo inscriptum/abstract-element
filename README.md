@@ -1,25 +1,104 @@
 # abstract-element
 
-## AbstractElement aims for creating web components identically independent from a render function.
+AbstractElement aims for creating Web components identically independent from a render engines. This project has an abstract class and a set of basic methods for developing Web components using various render engines.
 
-With AbstractElement you can use [lit-html](https://github.com/Polymer/lit-html) or [hyperHTML](https://github.com/WebReflection/hyperHTML) inside components with same manner.
+            +---------------------------------------+
+            |                                       |
+            |   AbstractElement + render-function   |
+            |                                       |
+            +---------------------------------------+
+            |                   |                   |
+            |  Web components   |          Renders  |
+            +---------------------------------------+
+            |                   |                   |
+            |  Custom Elements  |         lit-html  |
+            |                   |                   |
+            |  Shadow DOM       |        hyperHTML  |
+            |                   |                   |
+            |  ES Modules       |           ...     |
+            |                   |                   |
+            |  HTML Template    |                   |
+            |                   |                   |
+            +---------------------------------------+
 
-AbstractElement can uses [hyperHTML](https://github.com/WebReflection/hyperHTML) or [lit-html](https://github.com/Polymer/lit-html) or even your custom render function to render component into the DOM element's. AbstractElement reacts to changes in attributes or states and renders declaratively using the render function.
 
 ## Getting started
 
-  1. Add abstract-element to your project:
+1. Add abstract-element to your project:
 
-      ```npm i abstract-element```
+   `npm i abstract-element`
 
-  1. Create an element by extending AbstractElement and calling `customElements.define` with your class or use @Define directive if you use TypeScript.
+2. Install a [render engine\*](#doc).
 
-  1. Install the [hyperHTML](https://github.com/WebReflection/hyperHTML) or [lit-html](https://github.com/Polymer/lit-html) or other render.
+3. Create an element by extending AbstractElement and calling `customElements.define` with your class or use `@Define` directive if you use TypeScript.
 
-  1. Import AbstractElement and an render function. By default AbstractElement and the render function imports as esm2015 module, but you can import theyr from es5 folder for use as cjs module with ECMAScript 5.
+```typescript
+import { Define, AbstractElement, attr, state } from 'abstract-element';
+import litRender from 'abstract-element/render/lit';
 
-  1. See the [demo files](https://github.com/inscriptum/abstract-element/tree/master/demo).
+import { html } from 'lit-html';
 
+/**
+ * The demo web component with lit-html render engine
+ */
+@Define('demo-lit-component')
+export class DemoLitComponent extends AbstractElement {
+  @attr('data-demo')
+  dataDemo;
 
-> ## 🛠 Documentation status: IN PROCESS
-> This documentation is currently in development. It will be finish soon.
+  @state()
+  time = new Date().toLocaleTimeString();
+
+  constructor() {
+    super(litRender, true);
+
+    // update the time each second
+    setInterval(() => {
+      this.time = new Date().toLocaleTimeString();
+    }, 1000);
+  }
+
+  render() {
+    return html`
+      <section>
+        <p>${this.attr[DemoLitComponent.attributes.dataDemo]}</p>
+        <div>${this.time}</div>
+      </section>
+    `;
+  }
+}
+```
+
+4. Use the Web component.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Demo</title>
+  </head>
+  <body>
+    <script src="index.js"></script>
+    <demo-lit-component data-demo="Current time is rendering with lit-html:"></demo-lit-component>
+  </body>
+</html>
+```
+
+5. See the [demo files](https://github.com/inscriptum/abstract-element/tree/master/demo) for more examples.
+
+## <a id="doc"></a>Documentation
+
+- ### [[ru](doc/ru)]
+
+  - [установка](doc/ru#install)
+  - [использование](doc/ru#use)
+  - [рендеры](doc/ru#renders)
+  - [API](doc/ru#api)
+  - [мотивация](doc/ru#motivation)
+  - [отличия и сходства](doc/ru#diff_and_sim)
+  - [тем, кто хочет что-то изменить](doc/ru#contributors)
+
+- ### [[en](doc/en)] - 🛠 Documentation status: IN PROCESS

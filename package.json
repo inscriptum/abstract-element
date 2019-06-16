@@ -1,14 +1,14 @@
 {
   "name": "abstract-element",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "description": "The abstract class for creating web components",
   "main": "./index.js",
   "module": "./index.js",
   "private": true,
   "scripts": {
-    "make": "npm run build && node ./scripts/.make-lib",
-    "build": "rimraf ./lib && tsc -p ./tsconfig/tsconfig.esm.json && tsc -p ./tsconfig/tsconfig.cjs.json",
-    "dev": "npm run build && concurrently --raw \"tsc -w -p ./tsconfig/tsconfig.esm.json\" \"webpack-dev-server --config ./demo/webpack.config.js\"",
+    "build": "npm run transpile && node ./scripts/.make-lib",
+    "transpile": "rimraf ./lib && tsc -p ./tsconfig/tsconfig.esm.json && tsc -p ./tsconfig/tsconfig.cjs.json",
+    "dev": "npm run transpile && concurrently --raw \"tsc -w -p ./tsconfig/tsconfig.esm.json\" \"webpack-dev-server --config ./demo/webpack.config.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pub": "npm publish ./lib",
     "pub:beta": "npm publish ./lib --tag beta"
