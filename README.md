@@ -91,14 +91,14 @@ export class DemoLitComponent extends AbstractElement {
 
 ## <a id="doc"></a>Documentation
 
-- ### [[ru](doc/ru)]
+- ### [[ru](doc/ru.md)]
 
-  - [установка](doc/ru#install)
-  - [использование](doc/ru#use)
-  - [рендеры](doc/ru#renders)
-  - [API](doc/ru#api)
-  - [мотивация](doc/ru#motivation)
-  - [отличия и сходства](doc/ru#diff_and_sim)
-  - [тем, кто хочет что-то изменить](doc/ru#contributors)
+  - [установка](doc/ru.md#install)
+  - [использование](doc/ru.md#use)
+  - [рендеры](doc/ru.md#renders)
+  - [API](doc/ru.md#api)
+  - [мотивация](doc/ru.md#motivation)
+  - [отличия и сходства](doc/ru.md#diff_and_sim)
+  - [тем, кто хочет что-то изменить](doc/ru.md#contributors)
 
-- ### [[en](doc/en)] - 🛠 Documentation status: IN PROCESS
+- ### [[en](doc/en.md)] - 🛠 Documentation status: IN PROCESS
