@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
@@ -10,14 +9,14 @@ module.exports = {
     extensions: ['.ts', '.js', '.json'],
     alias: {
       'abstract-element': path.resolve(__dirname, '../lib'),
-      "abstract-element/render-hyper": path.resolve(__dirname, '../lib/render/hyper'),
-      "abstract-element/render-lit": path.resolve(__dirname, '../lib/render/lit')
+      "abstract-element/render/hyper": path.resolve(__dirname, '../lib/render/hyper'),
+      "abstract-element/render/lit": path.resolve(__dirname, '../lib/render/lit')
     }
   },
   mode: 'development',
   devServer: {
     historyApiFallback: true,
-    port: 3000,
+    port: 8080,
   },
   entry: {
     'index': path.join(__dirname, 'index.ts'),
