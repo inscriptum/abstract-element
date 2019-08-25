@@ -12,9 +12,8 @@ const PATHS = {
 // minify files
 const jsFiles = glob.sync(path.join(PATHS.lib, '**/*.js'));
 const options = {
-  mangle: {
-    properties: true
-  }
+  warnings: true,
+  mangle: false,
 };
 jsFiles.forEach(file => {
   fs.writeFileSync(file, terser.minify({ file: fs.readFileSync(file, 'utf8') }, options).code, 'utf8');
