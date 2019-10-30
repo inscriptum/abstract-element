@@ -13,10 +13,12 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
   private connected: boolean = false;
   protected attr: { [x: string]: string } = {};
 
-  private _state: any;
+  private _state: any = {};
   protected set state(newState: any) {
-    this._state = newState || this.state;
-    this._attach();
+    if(newState && this.state !== newState) {
+      this._state = newState;
+      this._attach();
+    }
   }
   protected get state() {
     return this._state;
