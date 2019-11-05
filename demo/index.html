@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="ie=edge"
+  >
   <title>Demo</title>
 </head>
+
 <body>
-  <script src="index.js"></script>  
+  <script src="index.js"></script>
 
   <demo-hyper-component data-demo="Current time is rendering with hyperHTML:"></demo-hyper-component>
   <demo-lit-component data-demo="Current time is rendering with lit-html:"></demo-lit-component>
 
-  <hr/>
+  <hr />
 
   <demo-hyper-waiter></demo-hyper-waiter>
   <demo-lit-waiter></demo-lit-waiter>
 
-  <hr/>
+  <hr />
 
   <demo-hyper-attributer></demo-hyper-attributer>
   <demo-lit-attributer></demo-lit-attributer>
 
+  <ht />
+
+  <demo-immer-timer></demo-immer-timer>
+
 </body>
+
 </html>

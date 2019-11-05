@@ -1,5 +1,6 @@
 import './waiter';
 import './attributer/attributer';
+import './immer-timer';
 
 import { TemplateResult } from 'lit-html';
 import { Define, AbstractElement } from 'abstract-element';
