@@ -11,6 +11,7 @@ export interface IRenderFunction<T = any> {
 export abstract class AbstractElement<T = any> extends HTMLElement {
   static attributes: { [x: string]: string } = {};
   private connected: boolean = false;
+  /** @deprecated */
   protected attr: { [x: string]: string } = {};
 
   private _state: any = {};
@@ -25,7 +26,7 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return Object.keys(this.attributes).map(key => this.attributes[key]);
+    return Object.values(this.attributes);
   }
 
   // prettier-ignore
@@ -62,15 +63,16 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
    * LIFECYCLE
    * Invoked when one of the custom element's attributes is added, removed, or changed.
    */
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (oldValue !== newValue) {
+      /** @deprecated */
       if (this.attr[name] !== newValue) {
         this.attr[name] = newValue;
       }
 
-      for (const [attrProp, attrKey] of Object.entries(this.constructor['attributes'])) {
-        if (attrKey === name && this[attrProp] !== newValue) {
-          this[attrProp] = newValue;
+      for (const [attrKey, attrName] of Object.entries(this.constructor['attributes'])) {
+        if (attrName === name && this[attrKey] !== newValue) {
+          this[attrKey] = newValue;
           break;
         }
       }
