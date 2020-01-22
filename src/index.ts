@@ -2,8 +2,8 @@ export { AbstractElement } from './abstract-element';
 
 /**
  * Decorator for define Custom Element
- * 
- * TODO: 
+ *
+ * TODO:
  * - rename to `define` (it's a function and lower case uses everywhere in the official document https://www.typescriptlang.org/docs/handbook/decorators.html);
  * - property `nameTag` must be optional. If it was not sent create Custom Element with a tag from a class name converted to kebab-case.
  */
@@ -22,7 +22,7 @@ export function Define(nameTag: string) {
  */
 export function state<T>(mapper?: (state: T, key: string, value: any) => T | void): PropertyDecorator {
   if (typeof mapper !== 'function') {
-    mapper = (state: T, key: string, value: any) => ({ ...state, [key]: value });
+    mapper = (state: T, key: string, value: any) => (value !== state[key] ? { ...state, [key]: value } : undefined);
   }
 
   return function(target: any, key: string, descriptor?: PropertyDescriptor) {
@@ -80,7 +80,7 @@ export function attr(options?: string | { name?: string; converter?: (val: any) 
  * @param prototype - a web component class prototype
  * @param key - property key
  * @param mapper - a mapper function
- * 
+ *
  * TODO:
  *  - need to change this function to more universal kind. The `state` property has to be a variable;
  *  - the code `if (descriptor) {...` the same as a code in the attr function.

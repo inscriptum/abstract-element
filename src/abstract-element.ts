@@ -14,9 +14,9 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
   /** @deprecated */
   protected attr: { [x: string]: string } = {};
 
-  private _state: any = {};
+  private _state: { [x: string]: any } = {};
   protected set state(newState: any) {
-    if(newState && this.state !== newState) {
+    if(newState !== undefined && this.state !== newState) {
       this._state = newState;
       this._attach();
     }
