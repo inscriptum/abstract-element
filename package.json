@@ -1,6 +1,6 @@
 {
   "name": "abstract-element",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "The abstract class for creating web components",
   "main": "./index.js",
   "module": "./index.js",
