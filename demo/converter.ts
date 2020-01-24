@@ -1,5 +1,5 @@
 import { TemplateResult, html } from 'lit-html';
-import { Define, AbstractElement, attr, state } from 'abstract-element';
+import { Define, AbstractElement, prop } from 'abstract-element';
 import litRender from 'abstract-element/render/lit';
 
 /**
@@ -7,14 +7,14 @@ import litRender from 'abstract-element/render/lit';
  */
 @Define('demo-lit-converter')
 export class DemoLitComponentConverter extends AbstractElement {
-  @state()
+  @prop()
   loading: boolean = true;
 
   constructor() {
     super(litRender, true);
 
-    setTimeout(() => {
-      this.loading = false;
+    setInterval(() => {
+      this.loading = !this.loading;
     }, 3000);
   }
 
@@ -25,8 +25,11 @@ export class DemoLitComponentConverter extends AbstractElement {
   }
 }
 
-function boolAttr(val: string) {
-  return typeof val === 'string';
+
+function boolAttr(state, key: string, value: any) {
+  value = typeof value === 'string' ? true : Boolean(value);
+
+  return value !== state[key] ? { ...state, [key]: value } : undefined;
 }
 
 /**
@@ -34,7 +37,7 @@ function boolAttr(val: string) {
  */
 @Define('demo-lit-loader')
 export class DemoLitComponentLoader extends AbstractElement {
-  @attr({ converter: boolAttr })
+  @prop({ mapper: boolAttr, attribute: 'loading' })
   loading: boolean;
 
   constructor() {

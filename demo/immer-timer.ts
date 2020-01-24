@@ -1,6 +1,6 @@
 import produce, { applyPatches } from 'immer';
 import { TemplateResult, html } from 'lit-html';
-import { Define, AbstractElement, state } from 'abstract-element';
+import { Define, AbstractElement, prop } from 'abstract-element';
 import litRender from 'abstract-element/render/lit';
 
 let mapperTimer = setTimeout(() => {}, 10);
@@ -29,13 +29,13 @@ function mapper(state, key, value) {
  */
 @Define('demo-immer-timer')
 export class DemoImmerTimerComponent extends AbstractElement<TemplateResult> {
-  @state(mapper)
+  @prop({ mapper })
   time1 = new Date().toLocaleTimeString();
 
-  @state(mapper)
+  @prop({ mapper })
   time2 = new Date().toLocaleTimeString();
 
-  @state(mapper)
+  @prop({ mapper })
   time3 = new Date().toLocaleTimeString();
 
   constructor() {
@@ -44,8 +44,8 @@ export class DemoImmerTimerComponent extends AbstractElement<TemplateResult> {
     // update the time each second
     setInterval(() => {
       this.time1 = new Date().toLocaleTimeString();
-      this.time2 = new Date().toLocaleTimeString();
-      this.time3 = new Date().toLocaleTimeString();
+      this.time2 = new Date().toUTCString();
+      this.time3 = new Date().toISOString();
     }, 1000);
   }
 
@@ -53,9 +53,9 @@ export class DemoImmerTimerComponent extends AbstractElement<TemplateResult> {
     console.log('!!!!!!!!! RENDER !!!!!!!!!');
     return html`
       <section>
-        <div>${this.time1}</div>
-        <div>${this.time2}</div>
-        <div>${this.time3}</div>
+        <div>LocaleTimeString: <i>${this.time1}</i></div>
+        <div>UTCString: <i>${this.time2}</i></div>
+        <div>ISOString: <i>${this.time3}</i></div>
       </section>
     `;
   }

@@ -1,4 +1,4 @@
-import { Define, AbstractElement, state } from 'abstract-element';
+import { Define, AbstractElement, prop } from 'abstract-element';
 import hyperRender from 'abstract-element/render/hyper'
 import litRender from 'abstract-element/render/lit';
 
@@ -15,7 +15,7 @@ import './finder';
 export class DemoHyperComponent extends AbstractElement {
   html = hyperHTML.wire();
 
-  @state()
+  @prop()
   searchText = '';
 
   constructor() {
@@ -44,7 +44,7 @@ export class DemoHyperComponent extends AbstractElement {
 export class DemoLitComponent extends AbstractElement {
   html = litHtml.html;
 
-  @state()
+  @prop()
   searchText = '';
 
 

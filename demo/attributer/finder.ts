@@ -1,12 +1,10 @@
 import { TemplateResult } from 'lit-html';
-import { Define, AbstractElement, attr } from 'abstract-element';
-import hyperRender from 'abstract-element/render/hyper'
+import { Define, AbstractElement, prop } from 'abstract-element';
+import hyperRender from 'abstract-element/render/hyper';
 import litRender from 'abstract-element/render/lit';
 
 import * as litHtml from 'lit-html';
 import hyperHTML from 'hyperhtml/esm';
-
-
 
 /**
  * The demo web component with hyperHTML render engine
@@ -15,14 +13,12 @@ import hyperHTML from 'hyperhtml/esm';
 export class DemoHyperComponent extends AbstractElement {
   html = hyperHTML.wire();
 
-  @attr('search-text')
-  searchText;
-
+  @prop({ attribute: 'search-text' })
+  searchText: string;
 
   constructor() {
     super(hyperRender, true);
   }
-
 
   render() {
     return this.html`
@@ -34,8 +30,6 @@ export class DemoHyperComponent extends AbstractElement {
   }
 }
 
-
-
 /**
  * The demo web component with lit-html render engine
  */
@@ -43,14 +37,12 @@ export class DemoHyperComponent extends AbstractElement {
 export class DemoLitComponent extends AbstractElement {
   html = litHtml.html;
 
-  @attr('search-text')
-  searchText;
-
+  @prop({ attribute: 'search-text' })
+  searchText: string;
 
   constructor() {
     super(litRender, true);
   }
-
 
   render(): TemplateResult {
     return this.html`
