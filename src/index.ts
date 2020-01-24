@@ -19,6 +19,38 @@ export function Define(nameTag: string) {
 
 /**
  * Decorator for state properties inside AbstractElement
+ * 
+ * @param options - addition parameters to setup a property
+ */
+export function prop<T>(options?: { attribute?: string; mapper?: (state: T, key: string, value: any) => T | void }): PropertyDecorator {
+  let _mapper =
+    typeof options?.mapper === 'function'
+      ? options.mapper
+      : function(state: T, key: string, value: any) {
+          return value !== state[key] ? { ...state, [key]: value } : undefined;
+        };
+
+  return function(target: any, key: string, descriptor?: PropertyDescriptor) {
+    makePropertyMapper(target, key, _mapper, descriptor);
+
+    if (options?.attribute) {
+      const attributes = Reflect.get(target.constructor, 'attributes');
+
+      Reflect.defineProperty(target.constructor, 'attributes', {
+        value: {
+          ...attributes,
+          [key]: (typeof options === 'object' ? options.attribute : options) || key
+        },
+        enumerable: true,
+        writable: true
+      });
+    }
+  };
+}
+
+/**
+ * Decorator for state properties inside AbstractElement
+ * @deprecated use `prop` decorator
  */
 export function state<T>(mapper?: (state: T, key: string, value: any) => T | void): PropertyDecorator {
   if (typeof mapper !== 'function') {
@@ -34,8 +66,9 @@ export function state<T>(mapper?: (state: T, key: string, value: any) => T | voi
  * Decorator for attribute properties inside AbstractElement
  *
  * @param options - addition parameters to setting an attribute
+ * @deprecated use `prop` decorator with `attribute` option
  */
-export function attr(options?: string | { name?: string; converter?: (val: any) => any }): PropertyDecorator {
+export function attr(options?: string | { name?: string; converter?: (val: string) => any }): PropertyDecorator {
   return function(target: any, key: string, descriptor?: PropertyDescriptor) {
     // apply converter if it was send here
     if (typeof options === 'object' && typeof options.converter === 'function') {
@@ -43,14 +76,14 @@ export function attr(options?: string | { name?: string; converter?: (val: any) 
       if (descriptor) {
         const setter = descriptor.set || function() {};
         descriptor.set = function(value) {
-          value = options!.converter!(value);
+          value = options!.converter!.call(target, value);
           setter.call(target, value);
         };
       } else {
         const _key = Symbol(key);
         Reflect.defineProperty(target, key, {
-          set(value: any) {
-            target[_key] = options!.converter!(value);
+          set(value: string) {
+            target[_key] = options!.converter!.call(target, value);
           },
           get() {
             return target[_key];
@@ -109,7 +142,7 @@ function makePropertyMapper<T>(
           },
           enumerable: true
         });
-        this.state[key] = firstValue;
+        this.state = mapper.call(this, this.state, key, firstValue);
       },
       enumerable: true,
       configurable: true

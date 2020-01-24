@@ -73,11 +73,13 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
       for (const [attrKey, attrName] of Object.entries(this.constructor['attributes'])) {
         if (attrName === name && this[attrKey] !== newValue) {
           this[attrKey] = newValue;
+          const isNotState = this.state[attrKey] === undefined;
+          if(isNotState) {
+            this._attach();
+          }
           break;
         }
       }
-
-      this._attach();
     }
   }
 
