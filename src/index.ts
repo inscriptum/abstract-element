@@ -4,7 +4,6 @@ export { AbstractElement } from './abstract-element';
  * Decorator for define Custom Element
  *
  * TODO:
- * - rename to `define` (it's a function and lower case uses everywhere in the official document https://www.typescriptlang.org/docs/handbook/decorators.html);
  * - property `nameTag` must be optional. If it was not sent create Custom Element with a tag from a class name converted to kebab-case.
  */
 export function Define(nameTag: string) {
@@ -19,7 +18,7 @@ export function Define(nameTag: string) {
 
 /**
  * Decorator for state properties inside AbstractElement
- * 
+ *
  * @param options - addition parameters to setup a property
  */
 export function prop<T>(options?: { attribute?: string; mapper?: (state: T, key: string, value: any) => T | void }): PropertyDecorator {
@@ -27,19 +26,22 @@ export function prop<T>(options?: { attribute?: string; mapper?: (state: T, key:
     typeof options?.mapper === 'function'
       ? options.mapper
       : function(state: T, key: string, value: any) {
-          return value !== state[key] ? { ...state, [key]: value } : undefined;
+          if (value !== state[key]) {
+            return { ...state, [key]: value };
+          }
         };
 
   return function(target: any, key: string, descriptor?: PropertyDescriptor) {
     makePropertyMapper(target, key, _mapper, descriptor);
 
     if (options?.attribute) {
-      const attributes = Reflect.get(target.constructor, 'attributes');
+      const attrKey = 'attributes';
+      const attributes = Reflect.get(target.constructor, attrKey);
 
-      Reflect.defineProperty(target.constructor, 'attributes', {
+      Reflect.defineProperty(target.constructor, attrKey, {
         value: {
           ...attributes,
-          [key]: (typeof options === 'object' ? options.attribute : options) || key
+          [key]: options.attribute
         },
         enumerable: true,
         writable: true
