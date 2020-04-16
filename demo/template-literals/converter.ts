@@ -20,7 +20,7 @@ export class DemoLitComponentConverter extends AbstractElement {
 
   render(): TemplateResult {
     return html`
-      ⌛<demo-lit-loader ?loading=${this.loading}></demo-lit-loader>
+      ⌛<demo-lit-html-loader ?loading=${this.loading}></demo-lit-html-loader>
     `;
   }
 }
@@ -35,7 +35,7 @@ function boolAttr(state, key: string, value: any) {
 /**
  * The demo loader component
  */
-@Define('demo-lit-loader')
+@Define('demo-lit-html-loader')
 export class DemoLitComponentLoader extends AbstractElement {
   @prop({ mapper: boolAttr, attribute: 'loading' })
   loading: boolean;

@@ -54,7 +54,7 @@ export class DemoHyperComponent extends AbstractElement {
  * The demo web component with lit-html render engine
  */
 @Define('demo-lit-component')
-export class DemoLitComponent extends AbstractElement<TemplateResult> {
+export class DemoLitComponent extends AbstractElement {
   static attributes = { dataDemo: 'data-demo' };
   html = litHtml.html;
 

@@ -24,7 +24,9 @@
     "allowSyntheticDefaultImports": true,
     "rootDir": "./",
     "baseUrl": "./",
-    "inlineSources": true
+    "outDir": "./dist",
+    "inlineSources": true,
+    "jsx": "preserve"
   },
   "compileOnSave": false
 }
