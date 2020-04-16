@@ -1,0 +1,30 @@
+{
+  "extends": "../../babel.config.js",
+  "plugins": [
+    [
+      "babel-plugin-transform-jsx-to-tt",
+      {
+        "tag": "this.html",
+        "attributes": [
+          {
+            "prefix": "",
+            "attributes": [
+              "on.*"
+            ]
+          },
+          {
+            "preset": "global"
+          },
+          {
+            "prefix": "",
+            "attributes": [
+              "hidden",
+              "draggable",
+              "spellcheck"
+            ]
+          }
+        ]
+      }
+    ]
+  ]
+}

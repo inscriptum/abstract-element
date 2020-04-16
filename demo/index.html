@@ -15,7 +15,21 @@
 </head>
 
 <body>
-  <script src="index.js"></script>
+  <script src="template-literals.js"></script>
+  <script src="lit-html-render.js"></script>
+  <script src="hyperhtml-render.js"></script>
+
+
+  <demo-lit></demo-lit>
+
+  <hr />
+  <hr />
+
+  <demo-hyper></demo-hyper>
+
+  <hr />
+  <hr />
+  <hr />
 
   <demo-hyper-component data-demo="Current time is rendering with hyperHTML:"></demo-hyper-component>
   <demo-lit-component data-demo="Current time is rendering with lit-html:"></demo-lit-component>
@@ -36,7 +50,13 @@
 
   <hr />
 
-  <demo-lit-converter></demo-lit-converter>
+  <demo-lit-converter id='1'></demo-lit-converter>
+
+  <!-- <script>
+    setTimeout(() => {
+      document.getElementById('1').append(document.createElement('demo-date-time'))
+    }, 1000);
+  </script> -->
 
 </body>
 
