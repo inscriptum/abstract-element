@@ -6,7 +6,8 @@ const presets = [
         ie: "11",
         firefox: "58",
       },
-      useBuiltIns: "usage"
+      useBuiltIns: "usage",
+      corejs: 3
     }
   ]
 ];
