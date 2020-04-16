@@ -1,4 +1,30 @@
+import { AbstractElement } from 'abstract-element';
 export { AbstractElement } from './abstract-element';
+
+export function define<T, G = undefined>(
+  name: string,
+  constructor?: G extends CustomElementConstructor ? G : any,
+  options?: ElementDefinitionOptions
+) {
+  if (constructor !== undefined) {
+    try {
+      customElements.define(name, constructor, options);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  type PropsType = G extends undefined ? T : InstanceType<typeof constructor & {}> extends AbstractElement<infer U3> ? U3 : never;
+
+  return async (properties?: PropsType & Partial<HTMLElement>) => {
+    const elClass = await customElements.whenDefined(name).then(() => customElements.get(name));
+    if (typeof properties === 'object') {
+      for (const key in properties) {
+        elClass[key] = properties[key];
+      }
+    }
+  };
+}
 
 /**
  * Decorator for define Custom Element
@@ -21,18 +47,23 @@ export function Define(nameTag: string) {
  *
  * @param options - addition parameters to setup a property
  */
-export function prop<T>(options?: { attribute?: string; mapper?: (state: T, key: string, value: any) => T | void }): PropertyDecorator {
+export function prop<T = string>(options?: {
+  attribute?: string;
+  reflect?: boolean;
+  mapper?: (state: T, key: string, value: any) => {} | void;
+}): PropertyDecorator {
   let _mapper =
     typeof options?.mapper === 'function'
       ? options.mapper
       : function(state: T, key: string, value: any) {
-          if (value !== state[key]) {
+          if (state === undefined || value !== state[key]) {
             return { ...state, [key]: value };
           }
         };
 
   return function(target: any, key: string, descriptor?: PropertyDescriptor) {
-    makePropertyMapper(target, key, _mapper, descriptor);
+    const reflectAttr = options?.reflect ? options?.attribute ?? key : undefined;
+    makePropertyMapper(target, key, _mapper, reflectAttr, descriptor);
 
     if (options?.attribute) {
       const attrKey = 'attributes';
@@ -56,11 +87,11 @@ export function prop<T>(options?: { attribute?: string; mapper?: (state: T, key:
  */
 export function state<T>(mapper?: (state: T, key: string, value: any) => T | void): PropertyDecorator {
   if (typeof mapper !== 'function') {
-    mapper = (state: T, key: string, value: any) => (value !== state[key] ? { ...state, [key]: value } : undefined);
+    mapper = (state: T, key: string, value: any) => (state === undefined || value !== state[key] ? { ...state, [key]: value } : undefined);
   }
 
   return function(target: any, key: string, descriptor?: PropertyDescriptor) {
-    makePropertyMapper(target, key, mapper!, descriptor);
+    makePropertyMapper(target, key, mapper!, undefined, descriptor);
   };
 }
 
@@ -124,6 +155,7 @@ function makePropertyMapper<T>(
   prototype: any,
   key: string,
   mapper: (state: T, key: string, value: any) => T | void,
+  reflectAttr: string | undefined,
   descriptor?: PropertyDescriptor
 ) {
   if (descriptor) {
@@ -141,6 +173,9 @@ function makePropertyMapper<T>(
           },
           set(value: any) {
             this.state = mapper.call(this, this.state, key, value);
+            if (reflectAttr !== undefined) {
+              reflectAttrFromProp(this, reflectAttr, this.state[key]);
+            }
           },
           enumerable: true
         });
@@ -149,5 +184,22 @@ function makePropertyMapper<T>(
       enumerable: true,
       configurable: true
     });
+  }
+}
+
+function reflectAttrFromProp(el: Element, attrName: string, value: any) {
+  if (el instanceof Element) {
+    switch (typeof value) {
+      case 'boolean':
+        if (value) {
+          el.setAttribute(attrName, '');
+        } else {
+          el.removeAttribute(attrName);
+        }
+        break;
+      default:
+        el.setAttribute(attrName, String(value));
+        break;
+    }
   }
 }

@@ -6,23 +6,23 @@ export interface IRenderFunction<T = any> {
 }
 
 /**
- * Abstract render to create web component
+ * Abstract class to create Web components based on it
  */
-export abstract class AbstractElement<T = any> extends HTMLElement {
+export abstract class AbstractElement<Props = { [x: string]: {} }> extends HTMLElement {
   static attributes: { [x: string]: string } = {};
   private connected: boolean = false;
   /** @deprecated */
   protected attr: { [x: string]: string } = {};
 
-  private _state: { [x: string]: any } = {};
-  protected set state(newState: any) {
-    if(newState !== undefined && this.state !== newState) {
+  private _state: Partial<Props> = {};
+  protected set state(newState) {
+    if (newState !== undefined && this.state !== newState) {
       this._state = newState;
-      this._attach();
+      this.forceUpdate();
     }
   }
   protected get state() {
-    return this._state;
+    return this._state as Props;
   }
 
   static get observedAttributes() {
@@ -31,7 +31,7 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
 
   // prettier-ignore
   constructor(
-    renderFunc: IRenderFunction<T>,
+    renderFunc: IRenderFunction,
     shadow = false,
     mode: 'open' | 'closed' = 'open'
   ) {
@@ -73,9 +73,11 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
       for (const [attrKey, attrName] of Object.entries(this.constructor['attributes'])) {
         if (attrName === name && this[attrKey] !== newValue) {
           this[attrKey] = newValue;
+
+          /** @deprecated */
           const isNotState = this.state[attrKey] === undefined;
-          if(isNotState) {
-            this._attach();
+          if (isNotState) {
+            this.forceUpdate();
           }
           break;
         }
@@ -98,5 +100,5 @@ export abstract class AbstractElement<T = any> extends HTMLElement {
   /**
    * Render function
    */
-  abstract render(): T;
+  abstract render(): any;
 }
